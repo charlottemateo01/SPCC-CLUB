@@ -953,7 +953,6 @@ class Mycontroller extends CI_Controller{
         $this->form_validation->set_rules('add_detail', 'Detail','trim|required');
         $teacherData = $this->session->userdata('auth_teacher');
         $teacherId =  $teacherData['id'];
-        $teacherClub = $teacherData['clubid'];
         if($this->form_validation->run()==true){
 
             $file_name = $_FILES['add_file']['name'];
@@ -1006,8 +1005,97 @@ class Mycontroller extends CI_Controller{
             echo json_encode($form_validation);
         }
         
-        
       
+    }
+
+
+    public function editClubWork(){
+
+        extract($_POST);
+        $this->form_validation->set_rules('edit_clubtitle','Title','trim|required');
+        $this->form_validation->set_rules('edit_clubdetail', 'Detail','trim|required');
+
+        if($this->form_validation->run()==true)
+        {
+
+            $old_filename = $this->input->post('oldv');
+            $new_filename = $_FILES['edit_file']['name'];
+
+            if($new_filename == TRUE)
+            {
+                $update_filename = time()."_".str_replace(' ','-', $new_filename);
+                $config= ['upload_path'   => './assets/file_upload/',
+                'allowed_types' => 'mp4|mp3',
+                'file_name' =>  $update_filename,
+                ];
+                $this->load->library('upload', $config);
+                if( $this->upload->do_upload('edit_file'))
+                {
+                    if(file_exists("./assets/file_upload/".$old_filename))
+                    {
+                        unlink("./assets/file_upload/".$old_filename);
+                       
+                    }
+                }
+            }
+            else
+            {
+                $update_filename = $old_filename;
+               
+            }
+            $data = array(
+                'id' => $this->input->post('id'),
+                'title' => $edit_clubtitle,
+                'detail' => $edit_clubdetail,
+                'filename' =>$update_filename
+                );
+                $this->Mymodel->updateClubWork($data);
+               $form_validation= array(
+                   'validation'=>false,
+               );
+               echo json_encode($form_validation);
+        }
+        else
+        {
+            $form_validation = array(
+                'detail' => form_error('edit_clubdetail'), 
+                'title' => form_error('edit_clubtitle'),
+            
+                'settitle' => set_value('edit_clubtitle'),
+                'setdetail' => set_value('edit_clubdetail'),
+                'validation' => true
+            );
+            echo json_encode($form_validation);
+        }
+      
+    }
+
+
+    public function getClubWork(){
+        $id = $_POST['id'];
+        $result = $this->Mymodel->getClubWork($id);
+        $response = array();
+        foreach($result->result() as $row){
+           $response = $row;
+        }
+        echo json_encode($response);
+
+    }
+
+
+    public function deleteWokrs()
+    {
+        $id = $_POST['id'];
+        $result= $this->Mymodel->getClubWork($id);
+        $this->Mymodel->deleteWokrs($id);
+        $file = " ";
+        foreach($result->result() as $fl){
+            $file=$fl->filename;
+        }
+        if(file_exists("./assets/file_upload/".$file)){
+            unlink("./assets/file_upload/".$file);
+        }
+        
     }
 
 

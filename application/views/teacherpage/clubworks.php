@@ -145,47 +145,36 @@
   </div>
  </div>
  <!-- Edit Modal HTML -->
- <div id="editTinfo" class="modal fade">
+ <div id="modalEditWorks" class="modal fade">
   <div class="modal-dialog">
    <div class="modal-content">
-    <form action="" METHOD="POST" id="editTeacher"  enctype="multipart/form-data">
+    <form action="" METHOD="POST" id="frm-editWork"  enctype="multipart/form-data">
      <div  style="" class="modal-header">      
-      <h4 class="modal-title text-black">Edit Teacher Info</h4>
+      <h4 class="modal-title text-black">Edit Club Works</h4>
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
      </div>
      <div class="modal-body row">     
         <input type="text" id="id" name="id" hidden>
-        <input type="text" id="oldp" name="oldp" style="display:none">
-        <input type="text" id="oldpassword" name ="oldpassword" style="display:none">
-        <div class="form-group col-md-6">
-       <label>Student Number</label>
-       <input type="number" id="edit_tnumber" name="edit_tnumber"   class="form-control" value="" placeholder="Start-4">
-       <span id ="error_editTnumber" class="alert-danger"></span>
-    </div>
-      <div class="form-group col-md-6">
-       <label>FullName</label>
-       <input type="text" id="edit_tname" name="edit_tname"   class="form-control"  value="" required>
-       <span id ="error_editTname" class="alert-danger"></span>
+        <input type="text" id="oldv" name="oldv" style="display:none">
+        <div class="form-group col-md-12">
+       <label>Topic Title</label>
+       <input type="text" id="edit_clubtitle" name="edit_clubtitle"   class="form-control"  value="" required>
+       <span id ="error_edittitle" class="alert-danger"></span>
      </div>
       <div class="form-group col-md-12">
-         <label>Email</label>
-         <input type="email" id="edit_temail" name="edit_temail"  class="form-control" required>
-         <span id ="error_editTemail" class="alert-danger"></span>
+         <label></label>
+         <textarea name="edit_clubdetail" id="edit_clubdetail" class="form-control" rows="5" > </textarea>
+         <span id ="error_editdetail" class="alert-danger"></span>
       </div>    
       <div class="form-group col-md-12">
-         <label>Password</label>
-         <input type="password" id="edit_tpassword" name="edit_tpassword"  class="form-control" required>
-         <span id ="error_editTpassword" class="alert-danger"></span>
-      </div>    
-      <div class="form-group col-md-12">
-         <label>Profile</label>
-         <input type="file" id="edit_tprofile" name="edit_tprofile"  class="form-control" required>
-         <span id ="error_editTprofile" class="alert-danger"></span>
+         <label>file</label>
+         <input type="file" id="edit_file" name="edit_file"  class="form-control" required>
+         <span id ="error_editfile" name ="error_editfile" class="alert-danger"></span>
       </div>
      </div>
      <div  style="" class="modal-footer">
       <input type="reset" class="btn btn-danger"  value="Clear">
-      <button type="button" onclick="editTeacherInfo()"  name="" class="btn btn-primary" >Update</button>
+      <button type="button" onclick="editClubWork()"  name="" class="btn btn-primary" >Update</button>
      </div>
     </form>
    </div>
@@ -230,77 +219,72 @@ function displayClubwork(){
     columns:
     [
         {data:"title"},
-        {data:"dateposted"},
-        {data: null, title: 'Action', wrap: true, "render": function (item) { return '<div class="btn-group"><button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action</button><div class="dropdown-menu"> <a class="dropdown-item" onclick="getTeacherInfo('+item.id+')" href="" data-toggle="modal" data-target="#editTinfo">EDIT</a> <a class="dropdown-item" href="#"  onclick="deleteTeacherInfo('+item.id+')">DELETE</a></div>' } }
+        {data:"dateposted"}, 
+        {data: null, title: 'Action', wrap: true, "render": function (item) { return '<div class="btn-group"><button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action</button><div class="dropdown-menu"> <a class="dropdown-item" onclick="getClubWork('+item.id+')" href="" data-toggle="modal" data-target="#modalEditWorks">EDIT</a> <a class="dropdown-item" href="#"  onclick="deleteWokrs('+item.id+')">DELETE</a></div>' } }
     ]
   });
 }
 
-function getTeacherInfo(id){
+function  getClubWork(id){
 
-$.post("<?=base_url('Mycontroller/getTeacherInfo')?>",{
+$.post("<?=base_url('Mycontroller/getClubWork')?>",{
    id:id
  },function(data,status){
-   var teacherInfo = JSON.parse(data);
-   $('#id').val(teacherInfo.id);
-   $('#oldp').val(teacherInfo.picture)
-   $('#edit_tnumber').val(teacherInfo.teacherNo);
-   $('#edit_tname').val(teacherInfo.fullname);
-   $('#edit_temail').val(teacherInfo.email);
-   $('#edit_tprofile').val(teacherInfo.profile);
-   $('#oldpassword').val(teacherInfo.password)
+   var  clubWorks= JSON.parse(data);
+   $('#id').val(clubWorks.id);
+   $('#oldv').val(clubWorks.filename);
+   $('#edit_clubtitle').val(clubWorks.title);
+   $('#edit_clubdetail').val(clubWorks.detail);
+  
   });
 }
 
-function editTeacherInfo(){
+function editClubWork(){
 
-    var formData = new FormData($('#editTeacher')[0]);
-    $.ajax({
-        url:"<?=base_url('Mycontroller/editTeacherInfo')?>",
-        type:"POST",
-        data:formData,
-        processData: false,
-        contentType: false,
-        success:function(data){
-          displayTeacherInfo();
-          $('#edit_tnumber').val(null);
-          $('#edit_tname').val(null);
-          $('#edit_temail').val(null);
-          var error = JSON.parse(data);
-          if(error.validation ==true){
-          //seterror
-          var editTnumber_error = error.editTnumber;
-          var editTname_error = error.editTname;
-          var editTemail_error = error.editTemail;
-          var editTpass_error = error.editTpassword;
-          //setvalue
-          var setvalue_edittnumber = error.setEditTnumber;
-          var setvalue_edittname = error.setEditTname;
-          var setvalue_edittemail = error.setEditTemail;
-          //display_seterror
-          $('#error_editTname').html(editTname_error);
-          $('#error_editTemail').html(editTemail_error);
-          $('#error_editTpassword').html(editTpass_error);
-          $('#error_editTnumber').html(editTnumber_error);
-          //display_setvalue
-          $('#edit_tnumber').val(setvalue_edittnumber);
-          $('#edit_tname').val(setvalue_edittname);
-          $('#edit_temail').val(setvalue_edittemail);
-          //remove error in 3 second
-          setTimeout(()=>$('p').remove(),5000);
-          setTimeout(()=>$('p').remove(),5000);
-          }
-          else
-          {
-            swal(
-           'UpdateSuccess!',
-           'This Teacher Info updated!',
-           'success'
-           );
-           $('#editTinfo').modal('hide');
-          }
-        }
-    });
+  var formData = new FormData($('#frm-editWork')[0]);
+
+$.ajax({
+    url:"<?=base_url('Mycontroller/editClubWork')?>",
+    type:"POST",
+    data:formData,
+    processData: false,
+    contentType: false,
+    success:function(data){
+      displayClubwork();
+      $('#edit_clubtitle').val(null);
+      $('#edit_clubdetail').val(null);
+      var error = JSON.parse(data);
+      if(error.validation ==true){
+      //seterror
+      var  title_error = error.title;
+      var  detail_error = error.detail;
+      //setvalue
+      var setvalue_title = error.settitle;
+      var setvalue_detail = error.setdetail;
+      //display_seterror
+      $('#error_edittitle').html(title_error);
+      $('#error_editdetail').html(detail_error);
+      //display_setvalue
+      $('#edit_clubtitle').val(setvalue_title);
+      $('#edit_clubdetail').val(setvalue_detail);
+      //remove error in 5 second
+      setTimeout(()=>$('p').remove(),5000);
+      setTimeout(()=>$('p').remove(),5000);
+
+      }
+      else if(error.validation ==false)
+      {
+        swal(
+       'Success!',
+       'Update Success!',
+       'success'
+       );
+        $('#modalEditWorks').modal('hide');
+        $('#frm-editWork')[0].reset();
+      }
+    }
+});
+
 
     
 }
@@ -342,7 +326,7 @@ function addClubWork(){
           {
             swal(
            'Success!',
-           'You Add New Work!',
+           'You Add New Works!',
            'success'
            )
             $('#modalAddWorks').modal('hide');
@@ -354,20 +338,20 @@ function addClubWork(){
     
 }
 
-function deleteTeacherInfo(id){
+function deleteWokrs(id){
   var con = confirm("Are you sure do you want to delete!");
   if(con == true){
       $.ajax({
-      url:"<?=base_url('Mycontroller/deleteTeacherInfo')?>",
+      url:"<?=base_url('Mycontroller/deleteWokrs')?>",
       type:"POST",
       data: {id:id},
       success:function(data,status){
-        displayTeacherInfo();
+        displayClubwork();
           swal(
            'Deleted!',
            'You Delete One Record !',
            'success'
-           )
+           );
       }
    });
   }

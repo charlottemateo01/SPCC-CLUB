@@ -319,6 +319,28 @@ class Mymodel extends CI_Model{
         return $query->result();
     }
 
+    public function  getClubWork($id)
+    {
+        $worksid = $id;
+        $this->db->select('*');
+        $this->db->from('clubworks');
+        $this->db->where('id',$worksid);
+        return $this->db->get();
+    }
+
+    public function updateClubWork($data)
+    {
+        $this->db->where('id', $data['id']);
+        $this->db->update('clubworks', $data);
+        return true;
+    }
+
+    public function deleteWokrs($id){
+        $this->db->where("id", $id);
+        $this->db->delete("clubworks");
+        return true;
+    }
+
 
 }
 ?>
