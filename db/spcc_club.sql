@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2022 at 03:18 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.0.15
+-- Generation Time: May 30, 2022 at 06:04 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -61,8 +61,15 @@ CREATE TABLE `club` (
 --
 
 INSERT INTO `club` (`id`, `clubname`, `gmeetlink`, `banner`, `teacherid`) VALUES
-(19, 'Programming Club', 'https://meet.google.com/bem-wxqj-wrz', '1653365081278786254_499111441665798_5038019153379424598_n.png', 10),
-(20, 'Art Club', 'https://meet.google.com/exa-eahc-ucr', '1653389932281389814_1437461593367569_8590471554875462746_n.png', 11);
+(19, 'Programming Club', 'https://meet.google.com/bem-wxqj-wrz', '1653713927_programming-club.png', 19),
+(20, 'Art Club', 'https://meet.google.com/exa-eahc-ucr', '1653713943_arts-club.png', 12),
+(23, 'Sports Club', 'https://meet.google.com/vyy-bqrn-ujd', '1653713985sports-club.png', 12),
+(24, 'Animation Club', 'https://meet.google.com/dse-phtv-xdx', '1653714132animation-club.png', 20),
+(25, 'Multimedia Club', 'https://meet.google.com/qga-dfrt-iev', '1653714175multimedia-club.png', 18),
+(26, 'Networking Club', 'https://meet.google.com/cra-mumz-nqr', '1653714207networking-and-computer-hardware-club.png', 13),
+(27, 'Essay & Debate Club', 'https://meet.google.com/kuq-cscf-hga', '1653714254essay-and-debate-club.png', 17),
+(28, 'Dance Club', 'https://meet.google.com/qny-eqqd-etd ', '1653714285dance-club.png', 14),
+(29, 'Math Club', 'https://meet.google.com/eye-jvyz-psa', '1653714318math-club.png', 16);
 
 -- --------------------------------------------------------
 
@@ -105,7 +112,11 @@ CREATE TABLE `clubworks` (
 --
 
 INSERT INTO `clubworks` (`id`, `title`, `detail`, `filename`, `dateposted`, `teacherid`) VALUES
-(21, 'erer', ' erer', '16536997152022-04-21-13-04-37.mp4', '2022-05-28', 10);
+(21, 'erer', ' erer', '16536997152022-04-21-13-04-37.mp4', '2022-05-28', 10),
+(22, 'dfbd', ' dfbdfbsvdwesdvcsz', '1653918856_video-1653717612.mp4', '2022-05-28', 16),
+(23, 'math samples', ' dfbdfbvdfvdfx', '1653726623video-1653717612.mp4', '2022-05-28', 16),
+(24, 'tgbrdv', ' dsfvdsfv', '1653899705video-1653717612.mp4', '2022-05-30', 16),
+(25, 'wfvcs', ' aqcasc', '1653907022video-1653717612.mp4', '2022-05-30', 16);
 
 -- --------------------------------------------------------
 
@@ -131,8 +142,11 @@ CREATE TABLE `student_info` (
 --
 
 INSERT INTO `student_info` (`id`, `studentNo`, `fullname`, `picture`, `password`, `gender`, `age`, `email`, `teacherid`, `clubid`) VALUES
-(123, 41930956, 'Student1', '1653298267user3.jpg', '0192023a7bbd73250516f069df18b500', 'Female', 19, 'Student1@gmail.com', 10, 19),
-(124, 47584748, 'Student2', '1653451214279448343_527330439108268_108705336394898276_n.jpg', '0192023a7bbd73250516f069df18b500', 'Male', 21, 'Student2@gmail.com', 11, 20);
+(125, 26781920, 'christian tablo', '1653716567tablo.jpg', 'ad6a280417a0f533d8b670c61667e1a0', 'Male', 21, 'tablo_markchristian@spcc.edu.ph', 14, 28),
+(126, 45672345, 'charlotte mateo', '16537190458R_CSCP_ICT_1_5.jpg', 'ad6a280417a0f533d8b670c61667e1a0', 'Female', 19, 'mateo_charlotte@spcc.edu.ph', 16, 29),
+(127, 47589210, 'achie', '16537192548R_CSCP_ICT_1_5.jpg', 'ad6a280417a0f533d8b670c61667e1a0', 'Female', 21, 'aguilar_hazhel@spcc.edu.ph', NULL, NULL),
+(128, 18293046, 'brian salvacion', '1653726348tablo.jpg', 'ad6a280417a0f533d8b670c61667e1a0', 'Male', 21, 'salvacion_brian@spcc.edu.ph', 19, 19),
+(129, 45781920, 'student1', '1653726675dean.jpg', 'ad6a280417a0f533d8b670c61667e1a0', 'Male', 21, 'student1@spcc.edu.ph', 16, 29);
 
 -- --------------------------------------------------------
 
@@ -154,8 +168,15 @@ CREATE TABLE `teacher_info` (
 --
 
 INSERT INTO `teacher_info` (`id`, `teacherNo`, `fullname`, `email`, `password`, `picture`) VALUES
-(10, 47284628, 'teacher1', 'teacher1@gmail.com', '0192023a7bbd73250516f069df18b500', '1653364945user2.jpg'),
-(11, 44675889, 'teacher2', 'teacher2@gmail.com', '0192023a7bbd73250516f069df18b500', '165345068656862243_310111776335514_7799183949770522624_n.jpg');
+(12, 12893612, 'Angelica Perioles', 'perioles_angelica@spcc.edu.ph', 'a426dcf72ba25d046591f81a5495eab7', '1653713044mam-angelica.jpeg'),
+(13, 17829036, 'Dexter Antigua', 'antigua_dexter@spcc.edu.ph', 'a426dcf72ba25d046591f81a5495eab7', '1653713083sir-dexter.jpg'),
+(14, 10948029, 'William Jas', 'jas_william@spcc.edu.ph', 'a426dcf72ba25d046591f81a5495eab7', '1653713125sir-jas.jpg'),
+(15, 10984027, 'Rechelle Teves ', 'teves_rechelle@spcc.edu.ph', 'a426dcf72ba25d046591f81a5495eab7', '1653713195mam-teves.jpg'),
+(16, 12345678, 'Reymond Duenas', 'duenas_reymond@spcc.edu.ph', 'a426dcf72ba25d046591f81a5495eab7', '1653713232sir-mhon.jpg'),
+(17, 17839049, 'Jhensen Foronda', 'foronda_jhensen@spcc.edu.ph', 'a426dcf72ba25d046591f81a5495eab7', '1653713290sir-jhensen.jpg'),
+(18, 18290367, 'Mike Hulip', 'hulip_mike@spcc.edu.ph', 'a426dcf72ba25d046591f81a5495eab7', '1653713325sir-mike.jpg'),
+(19, 90273625, 'Verdel Manzano', 'manzano_verdel@spcc.edu.ph', 'a426dcf72ba25d046591f81a5495eab7', '1653713360sir-verdel.jpg'),
+(20, 67589342, 'Kenneth Odtuhan', 'odtuhan_kenneth@spcc.edu.ph', 'a426dcf72ba25d046591f81a5495eab7', '1653713428sir-odtuhan.jpg');
 
 --
 -- Indexes for dumped tables
@@ -211,7 +232,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `club`
 --
 ALTER TABLE `club`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `clubfile`
@@ -223,19 +244,19 @@ ALTER TABLE `clubfile`
 -- AUTO_INCREMENT for table `clubworks`
 --
 ALTER TABLE `clubworks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `student_info`
 --
 ALTER TABLE `student_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `teacher_info`
 --
 ALTER TABLE `teacher_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
